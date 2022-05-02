@@ -9,7 +9,7 @@ You will use all HTML/CSS/Accessibility/Responsive design/Bootstrap/Javascript k
 You won’t have a lot of instruction, you are free to implement it the way that you want - the objective is simple: Have fully functional web pages that look the same as the designer file.
 
 ## Here the final result:
-![Final Product] (https://holbertonintranet.s3.amazonaws.com/uploads/medias/2020/3/3c71cc99d2fc1c12a3d3.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOU5BHMTQX4%2F20220502%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220502T155946Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=0e76b6f153be00d919f30e94d9b7c3639ab4409b08d79fce89d0564af7dce36f)
+![Final Product]  (img src="images\readme.jpg")
 
    
 
