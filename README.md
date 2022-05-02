@@ -9,9 +9,9 @@ You will use all HTML/CSS/Accessibility/Responsive design/Bootstrap/Javascript k
 You won’t have a lot of instruction, you are free to implement it the way that you want - the objective is simple: Have fully functional web pages that look the same as the designer file.
 
 ## Here the final result:
-![Final Product] <img src="C:\Users\Makenzie\Holberton\holberton-smilingschool-javascript\images\readme.jpg" alt="alt text" title="image Title" width="150"/>
 
    
+![readme](https://user-images.githubusercontent.com/70171772/166317795-691c4b96-2377-4ba2-8482-de2381b86074.jpg)
 
 ## Requirements
 
