@@ -16,6 +16,8 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <!--OWN STYLES-->
   <link rel="stylesheet" href="styles.css">
+  <!--OWN SCRIPTS-->
+  <script src="scripts.js"></script>
 </head>
 <body>
   <!--HEADER-->
@@ -136,7 +138,8 @@
     <section class="w-100 mx-0 bg-smile py-5">
       <div class="container">
         <div class="col-12 py-5">
-          <div id="carouselSmile" class="carousel slide" data-ride="carousel">
+          <div class="loader" id="loaderQuotes"></div>
+          <div id="carouselSmile" class="carousel slide d-flex justify-content-center" data-ride="carousel">
             <!--PREVIOUS-->
             <div class="carousel-control-prev text-center align-items-md-center align-items-start pt-5 pt-md-0">
               <a href="#carouselSmile" role="button" data-slide="prev">
@@ -151,33 +154,8 @@
                 <span class="sr-only">Next</span>
               </a>
             </div>
-            <!--CONTENT #1-->
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <div class="row">
-                  <div class="col-12 col-md-4 text-center m-auto">
-                    <img class="rounded-circle" src="images/profile_5.jpg" alt="Profile 1" width="160" height="160">
-                  </div>
-                  <div class="col-12 col-md-8 pt-5 m-auto">
-                    <p class="text-white font-weight-normal size-p">« Those tutorials are concise and go straight to the point. I can’t think of a better place to learn smiling. And it’s so fun!</p>
-                    <p class="text-white font-weight-bold size-p">Person Name</p>
-                    <p class="text-white font-weight-normal size-p">weather presenter</p>
-                  </div>
-                </div>
-              </div>
-              <!--CONTENT #2-->
-              <div class="carousel-item">
-                <div class="row">
-                  <div class="col-12 col-md-4 text-center m-auto">
-                    <img class="rounded-circle" src="images/profile_5.jpg" alt="Profile 1" width="160" height="160">
-                  </div>
-                  <div class="col-12 col-md-8 pt-5 m-auto">
-                    <p class="text-white font-weight-normal size-p">« Those tutorials are concise and go straight to the point. I can’t think of a better place to learn smiling. And it’s so fun!</p>
-                    <p class="text-white font-weight-bold size-p">Person Name</p>
-                    <p class="text-white font-weight-normal size-p">weather presenter</p>
-                  </div>
-                </div>
-              </div>
+            <!--CONTENTS-->
+            <div class="carousel-inner w-75" id="quotesContent">
             </div>
           </div>
         </div>
