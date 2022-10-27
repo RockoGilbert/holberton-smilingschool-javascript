@@ -1,40 +1,66 @@
-# Build a web app in JavaScript
+# Holberton SmilingSchool
+# Now With Added JavaScript!
 
-In this project, you will finalize the previous project 0x0B. Implement a design with bootstrap and make some parts dynamic with Javascript (JQuery exactly).
+## Description
 
-You will reuse final files of 0x0B. Implement a design with bootstrap and update them.
+This project adds JavaScript, primarily with the use of jQuery for DOM manipulation, to the previous Bootstrap project found [here](https://github.com/RockoGilbert/holberton-smiling-school).
 
-You will use all HTML/CSS/Accessibility/Responsive design/Bootstrap/Javascript knowledges that you learned previously.
+This project duplicates the full dynamic front-end design of a fully-functional responsive website. The static content can be seen as 3 separate Figma designer files found [here](https://www.figma.com/file/QYQqMYbdpAHL5xTclwJKSI/Homepage?node-id=0%3A1), [here](https://www.figma.com/file/KLAI53jdYpfFNEy0O79ymB/Pricing?node-id=0%3A1), and [here](https://www.figma.com/file/ivg3abH1HLmMayBgjGg1Qf/Courses?node-id=0%3A1).
 
-You won’t have a lot of instruction, you are free to implement it the way that you want - the objective is simple: Have fully functional web pages that look the same as the designer file.
+Content on the page is dynamically loaded from the SmileSchool API found [here](https://smileschool-api.hbtn.info).
 
-## Here the final result:
+T
 
-   
-![readme](https://user-images.githubusercontent.com/70171772/166317795-691c4b96-2377-4ba2-8482-de2381b86074.jpg)
+## README Navigation
 
-## Requirements
+- [Description](#description)
+- [Navigation](#navigation)
+- [Examples](#examples)
+- [Installation](#installation)
+- [Project Rules](#project-rules)
+- [Features](#features)
 
-* You have to use Bootstrap
-* Your styles.css must be as small as you can - you must use as much as you can Bootstrap classes
-* You have to use JQuery
-* Your scripts.js must contain all your Javascript part
-* Your Javascript must be executed only when the document is loaded
 
-## Imports
+## Installation
 
-For this project, you will need: fonts from Google, JQuery, Bootstrap CSS/JS
+### 1. Install
+
+Clone the repository into your system with the command:
 
 ```
-<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Coiny&display=swap" rel="stylesheet">
-
-<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-<link rel="stylesheet" href="styles.css">
-<script src="scripts.js"></script>
+git@github.com:RockoGilbert/holberton-smiling-school-javascript.git
 ```
+
+### 2. Open
+
+Choose an HTML file. I recommend [homepage.html](https://github.com/RockoGilbert/holberton-smiling-school-javascript/blob/main/homepage.html)! Install "Live Server" or another server preview extension, run it, and navigate to the open port.
+
+### 3. View
+
+"Holberton SmilingSchool - JavaScript" is now ready to view!
+
+## Project Rules
+
+- You won’t have a lot of instruction, so you are free to implement it the way that you want. The objective is simple: Create a fully functional web page that looks the same as the designer file.
+- Your styles.css must be as small as you can. You must use Bootstrap classes as much as you can.
+- You have to use JQuery.
+- Your scripts.js must contain all of your JavaScript.
+- Your JavaScript must be executed only when the document is loaded.
+
+## Features
+
+- Reusable and easily-changeable content
+- Decently accessible as defined by [axe Dev Tools](https://www.deque.com/axe/devtools/)
+- Working multi-item carousel (using [Slick carousel](https://kenwheeler.github.io/slick/) plugin)
+- No static content present in dynamic sections
+- Loader is briefly visible if change Network to "Slow 3G"
+- Search initialized by:
+	- Click on magnifying glass
+	- Pressing "enter" while in "keywords" input field
+	- New topic selected
+	- New sort selected
+
+## Bugs
+
+- Loader should be visible during click on "next" arrow on carousels but couldn't get it working and included "infinite" loop instead
+- Latest tutorials only has 4 cards so arrows are not visible on desktop when exactly 4 are displayed (due to Slick carousel)
