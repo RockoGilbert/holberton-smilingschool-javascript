@@ -8,6 +8,7 @@ This project adds JavaScript, primarily with the use of jQuery for DOM manipulat
 This project duplicates the full dynamic front-end design of a fully-functional responsive website. The static content can be seen as 3 separate Figma designer files found [here](https://www.figma.com/file/QYQqMYbdpAHL5xTclwJKSI/Homepage?node-id=0%3A1), [here](https://www.figma.com/file/KLAI53jdYpfFNEy0O79ymB/Pricing?node-id=0%3A1), and [here](https://www.figma.com/file/ivg3abH1HLmMayBgjGg1Qf/Courses?node-id=0%3A1).
 
 Content on the page is dynamically loaded from the SmileSchool API found [here](https://smileschool-api.hbtn.info).
+![smiling-cover](https://user-images.githubusercontent.com/70171772/198294772-1ab29d71-9321-4a1a-8dda-a31f488383b7.jpg)
 
 T
 
