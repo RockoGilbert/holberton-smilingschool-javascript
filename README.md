@@ -7,6 +7,7 @@ This project adds JavaScript, primarily with the use of jQuery for DOM manipulat
 
 This project duplicates the full dynamic front-end design of a fully-functional responsive website. The static content can be seen as 3 separate Figma designer files found [here](https://www.figma.com/file/QYQqMYbdpAHL5xTclwJKSI/Homepage?node-id=0%3A1), [here](https://www.figma.com/file/KLAI53jdYpfFNEy0O79ymB/Pricing?node-id=0%3A1), and [here](https://www.figma.com/file/ivg3abH1HLmMayBgjGg1Qf/Courses?node-id=0%3A1).
 
+Content on the page is dynamically loaded from the SmileSchool API found [here](https://smileschool-api.hbtn.info).
 
 
 ## README Navigation
@@ -56,3 +57,8 @@ Choose an HTML file. I recommend [homepage.html](https://github.com/RockoGilbert
 	- Pressing "enter" while in "keywords" input field
 	- New topic selected
 	- New sort selected
+
+## Bugs
+
+- Loader should be visible during click on "next" arrow on carousels but couldn't get it working and included "infinite" loop instead
+- Latest tutorials only has 4 cards so arrows are not visible on desktop when exactly 4 are displayed (due to Slick carousel)
