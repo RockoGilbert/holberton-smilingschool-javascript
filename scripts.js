@@ -1,288 +1,273 @@
-$(document).ready(function() {
-  /* VARIABLES */
-  let dataPopularVideos = [];
-  let dataLastestVideos = [];
+/* NAVIGATION
+	1. Function Calls
+	2. Configuration
+	3. DOM Manipulation
+		- Testimonials
+		- Tutorials
+		- Form
+		- Shared
+*/
 
-  /* FUNCTIONS */
+/*** 1. FUNCTION CALLS ***/
 
-  function loadQuotes() {
-    // request data
-    $.ajax({
-      method: "GET",
-      url: "https://smileschool-api.hbtn.info/quotes",
-    })
-    .done(function(data) {
-      data.forEach(item => {
-        let active = "";
-
-        // the first one has the active
-        if (item.id == 1) {
-          active = "active";
-        }
-
-        $("#quotesContent").append(
-          '<div class="carousel-item '+ active +'">' +
-            '<div class="row">' +
-              '<div class="col-12 col-md-4 text-center m-auto">' +
-                '<img class="rounded-circle" src="' + item.pic_url +'" alt="Profile 1" width="160" height="160">' +
-              '</div>' +
-              '<div class="col-12 col-md-8 pt-5 m-auto">' +
-                '<p class="text-white font-weight-normal size-p">' + item.text + '</p>' +
-                '<p class="text-white font-weight-bold size-p">' + item.name + '</p>' +
-                '<p class="text-white font-weight-normal size-p">' + item.title + '</p>' +
-              '</div>' +
-            '</div>' +
-          '</div>'
-        );
-      });
-
-      //hide loader and show content
-      $("#loaderQuotes").hide();
-      $("#carouselSmile").show();
-    });
-  }
-
-  function loadCarouselVideos(url, container, loader, variable) {
-    $.ajax({
-      method: "GET",
-      url: url
-    })
-    .done(function(data) {
-      let cnt = 0;
-
-      data.forEach(item => {
-
-        let nextCard = cnt == data.length -1 ? 0 : cnt + 1;
-        let prevCard = cnt == 0 ? data.length -1 : cnt - 1;
-
-        let card = $(
-          '<div class="card border-0 mr-2" style="width: 16rem;" attr-next="' + nextCard + '" attr-prev="' + prevCard + '">' +
-            '<div class="d-flex align-items-center justify-content-center">' +
-              '<img src="' + item.thumb_url + '" alt="Video #1" class="card-img-top">' +
-              '<img src="images/play.png" alt="Video #1" class="position-absolute w-25">' +
-            '</div>' +
-            '<div class="card-body">' +
-              '<h5 class="card-title font-weight-bold text-dark">' + item.title + '</h5>' +
-            '</div>' +
-            '<ul class="list-group list-group-flush">' +
-              '<li class="list-group-item border-0 color-grey-smile">' + item['sub-title'] + '</li>' +
-              '<li class="list-group-item d-flex align-item-center border-0">' +
-                '<img class="rounded-circle" src="' + item.author_pic_url + '" alt="Profile 1" width="30" height="30">' +
-                '<p class="pl-3 color-smile my-auto">' + item.author + '</p>' +
-              '</li>' +
-              '<li class="list-group-item d-flex border-0">' +
-                '<div class="col-8 text-left pl-0">' +
-                  '<img src="images/star_on.png" width="23">' +
-                  '<img src="images/star_on.png" width="23">' +
-                  '<img src="images/star_on.png" width="23">' +
-                  '<img src="images/star_on.png" width="23">' +
-                  '<img src="images/star_off.png" width="23">' +
-                '</div>' +
-                '<div class="col-4 color-smile text-right pt-1 px-0">' +
-                  '<span>' + item.duration + '</span>' +
-                '</div>' +
-              '</li>' +
-            '</ul>' +
-          '</div>'
-        );
-        
-        variable.push(card);
-        cnt++;
-      });
-
-      //fill cards
-      slidesCards("", container, variable);
-
-      //hide loader
-      $("#" + loader).hide();
-    })
-  }
-
-  function itemToShow() {
-    let size = $(window).width()
-
-    if (size >= 1200)
-      return 4;
-    else if (size >= 992 && size <= 1199)
-      return 3;
-    else if (size >= 528 && size <= 991)
-      return 2;
-    else
-      return 1;
-  }
-
-  function slidesCards(action, container, variable) {
-
-    let itemtoShow = itemToShow();
-    let shownItems = $("#" + container).children().length;
-
-    if (action.localeCompare("") === 0) {
-      for (let cnt = 0; cnt < itemtoShow; cnt++) {
-        $("#" + container).append(variable[cnt]);
-      }
-    } else if (action.localeCompare("next") === 0 && shownItems != variable.length) {
-      let nextCard = parseInt($("#" + container + " .card").last().attr("attr-next"));
-      $("#" + container + " .card").first().remove();
-      $("#" + container).append(variable[nextCard]);
-    } else if(action.localeCompare("prev") === 0 && shownItems != variable.length) {
-      let prevCard = parseInt($("#" + container + " .card").first().attr("attr-prev"))
-      $("#" + container + " .card").last().remove();
-      $("#" + container).prepend(variable[prevCard]);
-    } else if (action.localeCompare("resize") == 0) {
-      if (shownItems > itemtoShow) {
-        for (let cnt = 0; cnt < shownItems - itemtoShow; cnt++) {
-          $("#" + container + " .card").last().remove();
-        }
-      } else {
-        for (let cnt = 0; cnt < itemtoShow - shownItems; cnt++) {
-          let nextCard = $("#" + container + " .card").last().attr("attr-next");
-          $("#" + container).append(variable[nextCard]);
-        }
-      }
-    }
-  }
-
-  function dataCourses(action) {
-    let search = "";
-    let sortBy = "";
-    let topic = "";
-
-    if (action.localeCompare("search") == 0) {
-      search = $("#keywords").val();
-      sortBy = $("#sortSelected").val();
-      topic = $("#topicSelected").val();
-    }
-
-    $.ajax({
-      method: "GET",
-      url: "https://smileschool-api.hbtn.info/courses",
-      data: {
-        q: search,
-        topic: topic,
-        sort: sortBy
-      }
-    })
-    .done(function(data){
-      if (action.localeCompare("dropdown") == 0) {
-        // topic option
-        $("#topic").html(data.topics[0]);
-        data.topics.forEach(item => {
-          let option = $('<a class="dropdown-item">' + item + '</a>');
-          $("#topicInput").append(option)
-          $(option).click(function() {
-            $("#topic").html($(this).html());
-            $("#topicSelected").val($(this).html());
-            dataCourses("search");
-          });
-        });
-
-        // sort options
-        $("#sort").html(data.topics[0]);
-        data.sorts.forEach(item => {
-          let option = $('<a class="dropdown-item" attr-val="' + item + '">' + item.replace("_", " ") + '</a>');
-          $("#sortbyInput").append(option);
-          $(option).click(function() {
-            $("#sort").html($(this).html());
-            $("#sortSelected").val($(this).attr("attr-val"));
-            dataCourses("search");
-          });
-        });
-      } else {
-        $("#numberOfVideos").html(data.courses.length + " video(s)");
-        $("#results").html("");
-
-        data.courses.forEach(item => {
-          let card = 
-            '<div class="d-flex col-12 col-sm-6 col-md-4 col-lg-3 px-sm-0">' +
-              '<div class="card border-0 ml-2">' +
-                '<div class="d-flex align-items-center justify-content-center">' +
-                  '<img src="' + item.thumb_url + '" alt="Video #1" class="card-img-top">' +
-                  '<img src="images/play.png" alt="Video #1" class="position-absolute w-25">' +
-                '</div>' +
-                '<div class="card-body">' +
-                  '<h5 class="card-title font-weight-bold text-dark">' + item.title + '</h5>' +
-                '</div>' +
-                '<ul class="list-group list-group-flush">' +
-                  '<li class="list-group-item border-0 color-grey-smile">' + item['sub-title'] + '</li>' +
-                  '<li class="list-group-item d-flex align-item-center border-0">' +
-                    '<img class="rounded-circle" src="' + item.author_pic_url + '" alt="Profile 1" width="30" height="30">' +
-                    '<p class="pl-3 color-smile my-auto">' + item.author + '</p>' +
-                  '</li>' +
-                  '<li class="list-group-item d-flex border-0">' +
-                    '<div class="col-8 text-left pl-0">' +
-                      '<img src="images/star_on.png" width="23">' +
-                      '<img src="images/star_on.png" width="23">' +
-                      '<img src="images/star_on.png" width="23">' +
-                      '<img src="images/star_on.png" width="23">' +
-                      '<img src="images/star_off.png" width="23">' +
-                    '</div>' +
-                    '<div class="col-4 color-smile text-right pt-1">' +
-                      '<span>' + item.duration + '</span>' +
-                    '</div>' +
-                  '</li>' +
-                '</ul>' +
-              '</div>' +
-            '</div>';
-
-            $("#results").append(card);
-        });
-      }
-    });
-  }
-
-  /* GENERAL CALLS */
-
-  // auto slide false
-  $('.carousel').carousel({
-    interval: false,
-  });
-
-  // hide all the content inside the carousel
-  $("#carouselSmile").hide();
-
-  /* FUNCTION CALLS */
-
-  // load data
-  setTimeout(function(){
-    // load the quuotes
-    loadQuotes()
-    // load popular videos and latest videos
-    loadCarouselVideos("https://smileschool-api.hbtn.info/popular-tutorials", "popularVideosContent", "loaderPopularVideos", dataPopularVideos);
-    loadCarouselVideos("https://smileschool-api.hbtn.info/latest-videos", "latestVideosContent", "loaderLatestVideos", dataLastestVideos);
-  }, 1000);
-
-  // load popular videos resize
-  $(window).resize(function() {
-    slidesCards("resize", "popularVideosContent", dataPopularVideos);
-    slidesCards("resize", "latestVideosContent", dataLastestVideos);
-  });
-
-  // next popular videos
-  $("#pv-next").click(function(){
-    slidesCards("next", "popularVideosContent", dataPopularVideos);
-  });
-
-  // previous popular videos
-  $("#pv-prev").click(function() {
-    slidesCards("prev", "popularVideosContent", dataPopularVideos);
-  });
-
-  // next lates videos
-  $("#lv-next").click(function(){
-    slidesCards("next", "latestVideosContent", dataLastestVideos);
-  });
-
-  // previous latest videos
-  $("#lv-prev").click(function() {
-    slidesCards("prev", "latestVideosContent", dataLastestVideos);
-  });
-
-  // load dropdown
-  dataCourses("dropdown");
-  dataCourses("search");
-
-  // search action
-  $("#keywords").change(function() {
-    dataCourses("search");
-  });
+   $(document).ready(function () {
+	loadTestimonials();
+	loadTutorials('https://smileschool-api.hbtn.info/popular-tutorials', 'popular');
+	loadTutorials('https://smileschool-api.hbtn.info/latest-videos', 'latest');
+	getFormData();
 });
+
+/*** 2. CONFIGURATION ***/
+
+let responsiveCarousel = {
+	autoplay: true,
+	infinite: true,
+	slidesToShow: 4,
+	slidesToScroll: 1,
+	arrows: true,
+	prevArrow: `<img class="a-left control-c slick-prev" src="images/arrow_black_left.png" aria-hidden="true" alt="prev">`,
+	nextArrow: `<img class="a-right control-c slick-next" src="images/arrow_black_right.png" aria-hidden="true" alt="next">`,
+	responsive: [
+		{
+			breakpoint: 992,
+			settings: {
+				slidesToShow: 3,
+				slidesToScroll: 1,
+			}
+		},
+		{
+			breakpoint: 768,
+			settings: {
+				slidesToShow: 2,
+				slidesToScroll: 1
+			}
+		},
+		{
+			breakpoint: 576,
+			settings: {
+				slidesToShow: 1,
+				slidesToScroll: 1
+			}
+		}
+	]
+};
+
+let singleCarousel = {
+	autoplay: true,
+	infinite: true,
+	arrows: true,
+	prevArrow: `<img class="a-left control-c slick-prev" src="images/arrow_white_left.png" aria-hidden="true" alt="prev">`,
+	nextArrow: `<img class="a-right control-c slick-next" src="images/arrow_white_right.png" aria-hidden="true" alt="next">`
+}
+
+/*** 3. DOM MANIPULATION ***/
+
+/* Testimonials
+   ============================= */
+
+function loadTestimonials() {
+	// Query for data for testimonials section (single-item carousel found in multiple places)
+	$.ajax({
+		type: 'GET',
+		url: 'https://smileschool-api.hbtn.info/quotes',
+		// Before - show loader
+		beforeSend: (()=> displayLoading(1, '.quotes')),
+		success: (data) => (data.forEach(addTestimonial)),
+		error: (() => console.log('Unable to load data')),
+		// After - Slick carousel and stop showing loader
+		complete: (() => {
+			$('.quotes').slick(singleCarousel);
+			displayLoading(0, '.quotes');
+		})
+	});
+}
+
+function addTestimonial(data) {
+	// Add html to .quotes div including dynamic data
+	$('.quotes').prepend(`<div>
+		<div class="row align-items-center justify-content-center">
+			<div class="col-md-4 text-center">
+				<img class="rounded-circle w-50 mx-auto" src="${data['pic_url']}" alt="">
+			</div>
+			<div class="col-md-6">
+				<div class="card-body">
+					<h1 class="lead">${data.text}</h1>
+					<p>
+						<span class="font-weight-bold">${data.name}</span>
+						<br><span class="font-italic">${data.title}</span>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>`);
+}
+
+/* Tutorials
+   ============================= */
+
+function loadTutorials(url, id) {
+	// Query for data for popular or latest tutorials video section (multi-item carousel)
+	$.ajax({
+		type: 'GET',
+		url: url,
+		// Before - show carousel
+		beforeSend: (()=> displayLoading(1, `.${id}`)),
+		success: (videos) => {
+			// for each tutorial, add html data and then add rating stars
+			for (let video of videos) {
+				addTutorial(video, id);
+				includeStars(video, id);
+			}
+		},
+		error: (() => console.log('Unable to load data')),
+		// After - Slick carousel and stop showing loader
+		complete: (() => {
+			$(`#${id}`).slick(responsiveCarousel);
+			displayLoading(0, `.${id}`);
+		})
+	});
+}
+
+function addTutorial(data, id) {
+	// Add html to #popular or #latest div including dynamic data
+	$(`#${id}`).prepend(`<div class="mx-2" id="${id}${data.id}">
+			<img class="card-img-top" src="${data["thumb_url"]}" alt="">
+			<div class="card-body mx-0">
+				<h1 class="card-title lead font-weight-bold">${data.title}</h1>
+				<p class="card-text text-secondary">${data["sub-title"]}</p>
+				<div class="row">
+					<img class="rounded-circle ml-2" src="${data["author_pic_url"]}" height="35px" width="35px" alt="">
+					<p class="ml-3 mt-1 purple">${data.author}</p>
+				</div>
+				<div class="row align-items-center justify-content-between px-4">
+					<div class="row" id="star${data.id}"></div>
+					<p class="purple ml-2 pt-3">${data.duration}</p>
+				</div>
+			</div>
+		</div>`);
+}
+
+/* Form
+   ============================= */
+
+function getFormData() {
+	// On click of search button, gather data and send to parsing function
+	$('.magnify').click(() => {
+		// Clear existing data
+		$('#form').empty();
+
+		// Save current data in object
+		const search_terms = {
+			"search": $('#search').val().toLowerCase(),
+			"topic": $('#topic').find(':selected').attr('value'),
+			"sort": $('#sort').find(':selected').attr('value')
+		}
+		compareFormData(search_terms);
+	});
+
+	// If user presses "enter" in input field, same as button click and will trigger search
+	$('#search').keypress(function (e) {
+		if (e.which === 13) {
+			$('.magnify').click();
+		}
+	});
+
+	// Any changes to dropdowns will also trigger search
+	$('#sort').change(() => $('.magnify').click());
+	$('#topic').change(() => $('.magnify').click());
+}
+
+function compareFormData(search) {
+	// Compares data in search to data in api
+	let videos = [];
+	$.ajax({
+		type: 'GET',
+		url: 'https://smileschool-api.hbtn.info/courses',
+		// Before - show carousel
+		beforeSend: (()=> displayLoading(1, '#form')),
+		success: (allVideos) => {
+			for (let video of allVideos.courses) {
+				// Put all keywords into new array as lowercase
+				const arr = video.keywords.map(v => v.toLowerCase());
+				// Matching search term and "all" topics
+				if ((arr.includes(search.search) || (search.search == '')) && (search.topic === '1')) {
+					videos.push(video);
+					// Matching search term and specified topic
+				} else if ((arr.includes(search.search) || (search.search == '')) && (search.topic === video.topic)) {
+					videos.push(video);
+				}
+			}
+			// Sort data by search term and add to DOM in order
+			sortFormData(videos, search.sort);
+			// Find total number of items in search to add on complete
+			num = videos.length;
+		},
+		error: (() => console.log('Unable to load data')),
+		// After - Add number of videos and stop showing loader
+		complete: (() => {
+			$('#number').html(`${num} videos`);
+			displayLoading(0, '#form');
+		})
+	})
+}
+
+function sortFormData(videos, search) {
+	// Sort by "most popular"
+	if (search === '1') {
+		videos.sort((a, b)=> b.star - a.star)
+	// Sort by "most recent"
+	} else if (search === '2') {
+		videos.sort((a, b)=> b.published_at - a.published_at)
+	// Sort by "most viewed"
+	} else {
+		videos.sort((a, b)=> b.views - a.views)
+	}
+
+	// For each video, send data to showData and includeStars
+	for (let video of videos) {
+		addFormData(video);
+		includeStars(video, `form${video.id}`);
+	}
+}
+
+function addFormData(data) {
+	// Add html to .form div including dynamic data
+	$('#form').append(`<div class="col my-3" id="form${data.id}">
+		<img class="card-img-top" src="${data["thumb_url"]}" alt="">
+		<div class="card-body">
+			<h1 class="card-title lead font-weight-bold text-dark">${data.title}</h1>
+			<p class="card-text text-secondary">${data["sub-title"]}</p>
+			<div class="row">
+				<img class="rounded-circle ml-3" src="${data["author_pic_url"]}" height="25px" width="25px" alt="">
+				<p class="ml-3 purple">${data.author}</p>
+			</div>
+			<div class="row align-items-center justify-content-between px-4">
+				<div class="row" id="star${data.id}"></div>
+				<p class="purple ml-2 pt-3">${data.duration}</p>
+			</div>
+			</div>
+		</div>
+	</div>`);
+}
+
+/* Shared
+   ============================= */
+
+function includeStars(data, id) {
+	// Add star rating to video tutorials
+	for (let on = 0; on < data.star; on++) {
+		$(`#${id} #star${data.id}`).append('<img src="images/star_on.png" height="25px" width="25px" alt="">');
+	}
+	for (let off = 5; off > data.star; off--) {
+		$(`#${id} #star${data.id}`).append('<img src="images/star_off.png" height="25px" width="25px" alt="">');
+	}
+}
+
+function displayLoading(loading, tag) {
+	// Adds spinner to indicate loading while API is working
+	if (loading) {
+		$(tag).wrap('<div class="loader"></div>');
+	} else {
+		$(tag).unwrap();
+	}
+}
